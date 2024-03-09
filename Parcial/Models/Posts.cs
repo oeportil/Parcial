@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PARCIAL_1A.Models;
 
-public partial class Post
+public partial class Posts
 {
     public int Id { get; set; }
 
@@ -15,5 +15,5 @@ public partial class Post
 
     public int? AutorId { get; set; }
 
-    public virtual Autore? Autor { get; set; }
+    public virtual Autores? Autor { get; set; }
 }
