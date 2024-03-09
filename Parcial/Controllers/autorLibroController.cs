@@ -90,6 +90,32 @@ namespace PARCIAL_1A.Controllers
             return Ok(libro);
         }
 
+        [HttpGet]
+        [Route("BuscarLibrosPorAutor")]
+        public IActionResult BuscarLibrosPorAutor(string nombreAutor)
+        {
+            if (string.IsNullOrWhiteSpace(nombreAutor))
+            {
+                return BadRequest("El nombre del autor no puede estar vacío");
+            }
+
+            // Obtener registros de AutorLibros que coinciden con el nombre del autor
+            var autorLibros = _contex.AutorLibros
+                .Include(al => al.Libro)
+                .Include(al => al.Autor)
+                .Where(al => al.Autor.Nombre.Contains(nombreAutor))
+                .ToList();
+
+            if (autorLibros.Count == 0)
+            {
+                return NotFound("No se encontraron libros para el autor proporcionado");
+            }
+
+            // Extraer los libros de los registros de AutorLibros encontrados
+            var libros = autorLibros.Select(al => al.Libro).ToList();
+
+            return Ok(libros);
+        }
 
     }
 }
