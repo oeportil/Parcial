@@ -100,7 +100,7 @@ namespace PARCIAL_1A.Controllers
             }
 
             // Obtener registros de AutorLibros que coinciden con el nombre del autor
-            var autorLibros = _contex.AutorLibro
+            var autorLibro = _contex.AutorLibro
                 .Include(al => al.Libro)
                 .Include(al => al.Autor)
                 .Where(al => al.Autor.Nombre.Contains(nombreAutor))
@@ -112,7 +112,7 @@ namespace PARCIAL_1A.Controllers
             }
 
             // Extraer los libros de los registros de AutorLibros encontrados
-            var libros = autorLibros.Select(al => al.Libro).ToList();
+            var libros = autorLibro.Select(al => al.Libro).ToList();
 
             return Ok(libros);
         }
