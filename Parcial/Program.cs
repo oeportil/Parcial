@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Parcial.Models;
+using PARCIAL_1A.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
