@@ -91,5 +91,56 @@ namespace PARCIAL_1A.Controllers
         }
 
 
+        [HttpGet]
+        [Route("posts-ultimo-autor")]
+         public IActionResult ListarUltimosPostsPorAutor(string nombreAutor)
+         {
+         var ultimosPostsPorAutor = (from post in _contex.Posts
+                                    join autor in _contex.Autores on post.AutorId equals autor.Id
+                                    where autor.Nombre == nombreAutor
+                                    orderby post.FechaPublicacion descending
+                                    select new
+                                    {
+                                        post.Id,
+                                        post.Titulo,
+                                        post.Contenido,
+                                        post.FechaPublicacion,
+                                        Autor = autor.Nombre
+                                    }).Take(20).ToList();
+
+              if (ultimosPostsPorAutor.Count == 0)
+                 {
+                      return NotFound("No se encontraron posts para el autor especificado.");
+                 }
+
+        return Ok(ultimosPostsPorAutor);
+          }
+
+        [HttpGet]
+        [Route("posts-por-libro")]
+        public IActionResult ListarPostsPorLibro(string tituloLibro)
+        {
+            var postsPorLibro = (from autorLibro in _contex.AutorLibros
+                                 join libro in _contex.Libros on autorLibro.LibroId equals libro.Id
+                                 join autor in _contex.Autores on autorLibro.AutorId equals autor.Id
+                                 join post in _contex.Posts on autor.Id equals post.AutorId
+                                 where libro.Titulo == tituloLibro
+                                 select new
+                                 {
+                                     PostId = post.Id,
+                                     PostTitulo = post.Titulo,
+                                     PostContenido = post.Contenido,
+                                     PostFechaPublicacion = post.FechaPublicacion,
+                                     AutorNombre = autor.Nombre
+                                 }).ToList();
+
+            if (postsPorLibro.Count == 0)
+            {
+                return NotFound("No se encontraron posts para el libro especificado.");
+            }
+
+            return Ok(postsPorLibro);
+        }
+
     }
 }
