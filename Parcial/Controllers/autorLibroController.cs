@@ -21,7 +21,7 @@ namespace PARCIAL_1A.Controllers
         [Route("GetAll")]
         public IActionResult Get()
         {
-            List<AutorLibros> listadoAutorlibros = (from l in _contex.AutorLibros
+            List<AutorLibro> listadoAutorlibros = (from l in _contex.AutorLibros
                                           select l).ToList();
 
             if (listadoAutorlibros.Count() == 0)
@@ -35,7 +35,7 @@ namespace PARCIAL_1A.Controllers
         [HttpPost]
         [Route("Add")]
 
-        public IActionResult guardarAutorLibro([FromBody] AutorLibros libro)
+        public IActionResult guardarAutorLibro([FromBody] AutorLibro libro)
         {
             try
             {
@@ -52,9 +52,9 @@ namespace PARCIAL_1A.Controllers
         [HttpPut]
         [Route("actualizar/{id}")]
 
-        public IActionResult actualizarAutorLibro(int id, [FromBody] AutorLibros libroModificar)
+        public IActionResult actualizarAutorLibro(int id, [FromBody] AutorLibro libroModificar)
         {
-            AutorLibros? libroActual = (from l in _contex.AutorLibros
+            AutorLibro? libroActual = (from l in _contex.AutorLibros
                                         where l.AutorId == id
                                         select l).FirstOrDefault();
 
@@ -76,15 +76,15 @@ namespace PARCIAL_1A.Controllers
 
         public IActionResult eliminarAutorLibro(int id)
         {
-            AutorLibros? libro = (from l in _contex.AutorLibros
+            AutorLibro? libro = (from l in _contex.AutorLibro
                              where l.AutorId == id
                              select l).FirstOrDefault();
 
             if (libro == null)
             { return NotFound(); }
 
-            _contex.AutorLibros.Attach(libro);
-            _contex.AutorLibros.Remove(libro);
+            _contex.AutorLibro.Attach(libro);
+            _contex.AutorLibro.Remove(libro);
             _contex.SaveChanges();
 
             return Ok(libro);

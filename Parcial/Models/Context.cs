@@ -9,7 +9,7 @@ namespace PARCIAL_1A.Models
         public Context(DbContextOptions<Context> options) : base(options) { 
                 
         }
-        public virtual DbSet<AutorLibros> AutorLibros { get; set; }
+        public virtual DbSet<AutorLibro> AutorLibro { get; set; }
 
         public virtual DbSet<Autores> Autores { get; set; }
 
@@ -19,7 +19,7 @@ namespace PARCIAL_1A.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AutorLibros>().HasNoKey();
+            modelBuilder.Entity<AutorLibro>().HasNoKey();
         }
     }
 }

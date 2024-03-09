@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PARCIAL_1A.Models;
 
-public partial class AutorLibros
+public partial class AutorLibro
 {
     public int? AutorId { get; set; }
 
