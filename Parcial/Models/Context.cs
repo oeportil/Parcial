@@ -11,7 +11,7 @@ namespace PARCIAL_1A.Models
         }
         public virtual DbSet<AutorLibros> AutorLibros { get; set; }
 
-        public virtual DbSet<Autore> Autores { get; set; }
+        public virtual DbSet<Autores> Autores { get; set; }
 
         public virtual DbSet<Libros> Libros { get; set; }
 
