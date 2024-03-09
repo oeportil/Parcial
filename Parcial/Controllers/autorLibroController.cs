@@ -21,7 +21,7 @@ namespace PARCIAL_1A.Controllers
         [Route("GetAll")]
         public IActionResult Get()
         {
-            List<AutorLibro> listadoAutorlibros = (from l in _contex.AutorLibros
+            List<AutorLibro> listadoAutorlibros = (from l in _contex.AutorLibro
                                           select l).ToList();
 
             if (listadoAutorlibros.Count() == 0)
@@ -39,7 +39,7 @@ namespace PARCIAL_1A.Controllers
         {
             try
             {
-                _contex.AutorLibros.Add(libro);
+                _contex.AutorLibro.Add(libro);
                 _contex.SaveChanges();
                 return Ok(libro);
             }
@@ -54,7 +54,7 @@ namespace PARCIAL_1A.Controllers
 
         public IActionResult actualizarAutorLibro(int id, [FromBody] AutorLibro libroModificar)
         {
-            AutorLibro? libroActual = (from l in _contex.AutorLibros
+            AutorLibro? libroActual = (from l in _contex.AutorLibro
                                         where l.AutorId == id
                                         select l).FirstOrDefault();
 
@@ -100,13 +100,13 @@ namespace PARCIAL_1A.Controllers
             }
 
             // Obtener registros de AutorLibros que coinciden con el nombre del autor
-            var autorLibros = _contex.AutorLibros
+            var autorLibros = _contex.AutorLibro
                 .Include(al => al.Libro)
                 .Include(al => al.Autor)
                 .Where(al => al.Autor.Nombre.Contains(nombreAutor))
                 .ToList();
 
-            if (autorLibros.Count == 0)
+            if (autorLibro.Count == 0)
             {
                 return NotFound("No se encontraron libros para el autor proporcionado");
             }

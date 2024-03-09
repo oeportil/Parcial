@@ -120,7 +120,7 @@ namespace PARCIAL_1A.Controllers
         [Route("posts-por-libro")]
         public IActionResult ListarPostsPorLibro(string tituloLibro)
         {
-            var postsPorLibro = (from autorLibro in _contex.AutorLibros
+            var postsPorLibro = (from autorLibro in _contex.AutorLibro
                                  join libro in _contex.Libros on autorLibro.LibroId equals libro.Id
                                  join autor in _contex.Autores on autorLibro.AutorId equals autor.Id
                                  join post in _contex.Posts on autor.Id equals post.AutorId
