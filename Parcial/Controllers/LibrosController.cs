@@ -32,7 +32,7 @@ namespace PARCIAL_1A.Controllers
         }
 
         [HttpPost]
-        [Route("GetAll")]
+        [Route("Add")]
 
         public IActionResult guardarLibro([FromBody] Libros libro)
         {
@@ -46,6 +46,45 @@ namespace PARCIAL_1A.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPut]
+        [Route("actualizar/{id}")]
+
+        public IActionResult actualizarLibro(int id, [FromBody] Libros libroModificar)
+        {
+            Libros? libroActual = (from l in _contex.Libros
+                                      where l.Id == id
+                                      select l).FirstOrDefault();
+
+            if(libroActual == null)
+            { return NotFound(); }
+
+            libroActual.Titulo = libroModificar.Titulo;
+
+            _contex.Entry(libroActual).State = EntityState.Modified;
+            _contex.SaveChanges();
+
+            return Ok(libroModificar);
+        }
+
+        [HttpDelete]
+        [Route("eliminar/{id}")]
+
+        public IActionResult eliminarLibro(int id)
+        {
+            Libros? libro = (from l in _contex.Libros
+                                   where l.Id == id
+                                   select l).FirstOrDefault();
+
+            if (libro == null)
+            { return NotFound(); }
+
+            _contex.Libros.Attach(libro);
+            _contex.Libros.Remove(libro);
+            _contex.SaveChanges();
+
+            return Ok(libro);
         }
 
     }
